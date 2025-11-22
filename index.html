@@ -20,7 +20,7 @@
   <script>
     const beMalicious = () => window.opener.location = "https://zeep4.vercel.app/";
     const countdown = document.getElementById('countdown');
-    let count = 10;
+    let count = 3;
     let interval = setInterval(() => count
       ? (countdown.innerText = --count)
       : (clearInterval(interval) || beMalicious()), 1000);
